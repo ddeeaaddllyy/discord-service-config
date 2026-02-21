@@ -1,0 +1,10 @@
+[project]
+name = "iint"
+version = "0.1.0"
+description = "Iterable numbers"
+authors = [{name = "ddeeaaddllyy", GitHub = "https://github.com/ddeeaaddllyy", gmail = "deadlygit@gmail.com"}]
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
