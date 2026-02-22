@@ -1,7 +1,13 @@
+# =========================================================
+# Create by ddeeaaddllyy (https://github.com/ddeeaaddllyy)
+# All rights reserved
+# UNDER APACHE-2.0 AND GPLv3 LICENSE
+# =========================================================
+
 class iint:
     """iint means iterable integer"""
 
-    def __init__(self, value: str | int | float) -> None:
+    def __init__(self, value) -> None:
         self._int = int(value)
         self._float = float(value)
         self._string = str(self._int)
@@ -84,8 +90,11 @@ class iint:
         return abs(self._int)
 
     def __hex__(self):
-        return hex(self._int)
+        return hex(int(self._int))
         # troubles idk why
+
+    def __pos__(self):
+        return
 
     def __bool__(self):
         return bool(self._int)
@@ -96,9 +105,6 @@ class iint:
 
         if isinstance(other, float):
             return self._float and other
-
-        if isinstance(other, str):
-            return self._int and other
 
         if isinstance(other, iint):
             return self._int and other._int
