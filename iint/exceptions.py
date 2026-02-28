@@ -13,12 +13,9 @@ class NamelessException(Exception):
 
     def __str__(self):
         if self.message:
-            return "NamelessException said: {0}".format(self.message)
+            return "NamelessException said: {0}.".format(self.message)
 
-        return "NamelessException raised an empty error"
+        return "NamelessException raised an empty error."
 
     def __repr__(self):
-        return "LOL"
-        return f"NamelessException with {self.args} args"
-
-print(repr(NamelessException))
+        return "NamelessException raised with '{0}' args. Raised by __repr__.".format(self.message)
