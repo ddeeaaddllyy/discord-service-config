@@ -1,0 +1,17 @@
+{
+  "ds": "made by ddeeaaddllyy",
+  "apps": {
+    "IntelliJ IDEA": "idea.exe",
+    "PyCharm": "pycharm.exe",
+    "WebStorm": "webstorm.exe",
+    "PhpStorm": "phpstorm.exe",
+    "CLion": "clion.exe",
+    "Rider": "rider.exe",
+    "GoLand": "goland.exe",
+    "RubyMine": "rubymine.exe",
+    "DataGrip": "datagrip.exe",
+    "DataSpell": "dataspell.exe",
+    "RustRover": "rustrover.exe",
+    "Android Studio": "studio.exe"
+  }
+}

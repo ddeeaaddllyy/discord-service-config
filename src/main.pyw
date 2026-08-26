@@ -2,18 +2,28 @@ import time
 import psutil
 import pygetwindow as gw
 from pypresence import Presence
+from core.utils.OSutill import OSutill
+from core.entity.client_tokens import client_discord_tokens as tokens
+import json
 
+# Data from json file that describes all applications and their processes
+os_bits = OSutill.get_os_bits()
+if os_bits == 64:
+    with open(r"..\data\projects64.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+elif os_bits == 32:
+    with open(r"..\data\projects32.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+else:
+    raise OSError("Your OS is not available now")
 
-# The client name and avatar are set when creating the Discord application.
-# If you use my CLIENT_ID, it will default to "Difference" and my av.
-CLIENT_ID = "1522675721246478536"
-CLIENT_PUBLIC_KEY = "983e95a6eb09f546b0f5c9264310861af65d5ef9d6488c64e1e49d06384dc160"
+app_map = {exe.lower(): name for name, exe in data["apps"].items() if exe}
 
-rpc = Presence(CLIENT_ID)
+rpc = Presence(tokens.CLIENT_ID)
 rpc.connect()
 
-last_project = None
-
+last_app_name = None
+last_state = None
 
 def is_pycharm_running():
     for proc in psutil.process_iter(["name"]):
@@ -49,9 +59,7 @@ while True:
     if is_pycharm_running():
 
         project = get_project_name()
-
         if project != last_project:
-
             rpc.update(
                 details="Work in PyCharm",
                 state=project,
