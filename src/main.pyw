@@ -67,7 +67,7 @@ def update_rpc(app_name, project_name):
 
 
 if __name__ == "__main__":
-    print("[+] made by ddeeaaddllyy")
+    print("[+] made by ddeeaaddllyy [+]")
     while True:
         app_name, project, exe = get_running_app()
 
