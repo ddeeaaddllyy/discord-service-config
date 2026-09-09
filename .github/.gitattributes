@@ -1,0 +1,5 @@
+*.star diff=python linguist-language=Starlark
+.github/ export-ignore
+tests/ export-ignore
+*.png binary
+*.ico binary

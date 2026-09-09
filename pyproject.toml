@@ -1,0 +1,12 @@
+[project]
+name = "discord-service-config"
+authors = ["It was then i started gettin lost in books"]
+version = "1.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "psutil>=7.1.1",
+    "PyGetWindow>=0.0.9",
+    "pypresence>=4.6.1",
+    "starlark>=0.6.0",
+    "watchdog>=6.0.0"
+]
