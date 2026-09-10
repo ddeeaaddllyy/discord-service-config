@@ -114,10 +114,7 @@ class SmartMatcher:
         )
 
     @staticmethod
-    def _extract_project(
-        match: re.Match,
-        group: str,
-    ) -> str | None:
+    def _extract_project(match: re.Match, group: str ) -> str | None:
 
         try:
             value = match.group(group)
@@ -132,10 +129,7 @@ class SmartMatcher:
         return value or None
 
     @staticmethod
-    def _fallback_project(
-        title: str,
-        app: ApplicationConfig,
-    ) -> str | None:
+    def _fallback_project(title: str, app: ApplicationConfig) -> str | None:
 
         separators = (
             " - ",

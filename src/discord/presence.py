@@ -7,7 +7,6 @@ from pypresence import Presence
 
 from src.domain.models import DetectedActivity
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -34,10 +33,7 @@ class DiscordPresence:
             "Connected to Discord RPC"
         )
 
-    def update(
-        self,
-        activity: DetectedActivity,
-    ) -> None:
+    def update(self, activity: DetectedActivity) -> None:
         app = activity.app
 
         if self._active_app_id != app.id:

@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 from threading import Event, RLock
+
 from src.domain.models import RuntimeConfig
 
 
@@ -14,16 +16,11 @@ class ConfigStore:
 
         self.changed = Event()
 
-    def snapshot(
-        self,
-    ) -> tuple[RuntimeConfig, int]:
+    def snapshot(self) -> tuple[RuntimeConfig, int]:
         with self._lock:
             return self._config, self._version
 
-    def replace(
-        self,
-        config: RuntimeConfig,
-    ) -> int:
+    def replace(self, config: RuntimeConfig) -> int:
         with self._lock:
             self._config = config
             self._version += 1
@@ -32,4 +29,3 @@ class ConfigStore:
         self.changed.set()
 
         return version
-    

@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 import logging
+
 import psutil
 import win32gui
 import win32process
-from src.domain.models import WindowInfo
 
+from src.domain.models import WindowInfo
 
 logger = logging.getLogger(__name__)
 
@@ -17,26 +19,17 @@ class WindowsWindowProvider:
             win32gui.GetForegroundWindow()
         )
 
-        def callback(
-            hwnd: int,
-            _: object,
-        ) -> bool:
+        def callback(hwnd: int, _: object) -> bool:
             try:
                 if not win32gui.IsWindowVisible(hwnd):
                     return True
 
-                title = (
-                    win32gui.GetWindowText(hwnd)
-                    .strip()
-                )
+                title = ( win32gui.GetWindowText(hwnd).strip() )
 
                 if not title:
                     return True
 
-                _, pid = (
-                    win32process
-                    .GetWindowThreadProcessId(hwnd)
-                )
+                _, pid = ( win32process.GetWindowThreadProcessId(hwnd) )
 
                 if not pid:
                     return True

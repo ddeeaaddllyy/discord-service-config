@@ -1,7 +1,9 @@
+import re
 from collections.abc import Mapping, Sequence
 from pathlib import Path
-import re
+
 import starlark
+
 from core.exceptions.config_error import ConfigError
 from src.domain.models import (
     ApplicationConfig,
@@ -73,10 +75,7 @@ class StarlarkConfigLoader:
             applications=applications,
         )
 
-    def _parse_application(
-        self,
-        raw: dict,
-    ) -> ApplicationConfig:
+    def _parse_application(self, raw: dict) -> ApplicationConfig:
 
         try:
             app_id = str(raw["id"])

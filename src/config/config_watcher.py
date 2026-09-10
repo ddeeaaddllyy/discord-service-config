@@ -1,17 +1,19 @@
 from __future__ import annotations
+
 import logging
+from collections.abc import Callable
 from pathlib import Path
 from threading import Lock, Timer
-from typing import Callable
+
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 from watchdog.observers.api import BaseObserver
+
 from src.config.config_store import ConfigStore
 from src.config.starlark_loader import (
     ConfigError,
     StarlarkConfigLoader,
 )
-
 
 logger = logging.getLogger(__name__)
 

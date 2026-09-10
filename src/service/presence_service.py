@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 import logging
+
 from src.config.config_store import ConfigStore
 from src.discord.presence import DiscordPresence
 from src.domain.matcher import SmartMatcher
 from src.platform.windows import WindowsWindowProvider
-
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class PresenceService:
 
     def run(self) -> None:
         while True:
-            config, version = (
+            config, _ = (
                 self._config_store.snapshot()
             )
 
