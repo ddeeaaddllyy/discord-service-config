@@ -50,14 +50,10 @@ class ConfigFileHandler(FileSystemEventHandler):
         paths: list[Path] = []
 
         if getattr(event, "src_path", None):
-            paths.append(
-                Path(event.src_path).resolve()
-            )
+            paths.append(Path(event.src_path).resolve())
 
         if getattr(event, "dest_path", None):
-            paths.append(
-                Path(event.dest_path).resolve()
-            )
+            paths.append(Path(event.dest_path).resolve())
 
         if self._config_path not in paths:
             return
@@ -116,26 +112,19 @@ class ConfigWatcher:
 
     def _reload(self) -> None:
         try:
-            config = self._loader.load(
-                self._path
-            )
+            config = self._loader.load(self._path)
         except ConfigError:
-            logger.exception(
-                "Config reload failed. "
-                "Keeping previous configuration."
-            )
+            logger.exception("Config reload failed. Keeping previous configuration.")
             return
         except Exception:
             logger.exception(
-                "Unexpected config reload error. "
-                "Keeping previous configuration."
+                "Unexpected config reload error. Keeping previous configuration."
             )
             return
 
         version = self._store.replace(config)
 
         logger.info(
-            "Configuration reloaded successfully. "
-            "Version=%d",
+            "Configuration reloaded successfully. Version=%d",
             version,
         )

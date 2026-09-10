@@ -18,23 +18,17 @@ class StarlarkConfigLoader:
         try:
             source = path.read_text(encoding="utf-8")
         except OSError as exc:
-            raise ConfigError(
-                f"Cannot read config: {path}"
-            ) from exc
+            raise ConfigError(f"Cannot read config: {path}") from exc
 
         try:
             module = starlark.exec_file(source)
         except Exception as exc:
-            raise ConfigError(
-                f"Starlark execution failed: {exc}"
-            ) from exc
+            raise ConfigError(f"Starlark execution failed: {exc}") from exc
 
         try:
             raw_config = module.globals["CONFIG"]
         except KeyError as exc:
-            raise ConfigError(
-                "presence.star must export global CONFIG"
-            ) from exc
+            raise ConfigError("presence.star must export global CONFIG") from exc
 
         raw_config = self._to_python(raw_config)
 
@@ -47,28 +41,19 @@ class StarlarkConfigLoader:
         poll_interval = float(raw.get("poll_interval", 1.0))
 
         if poll_interval < 0.1:
-            raise ConfigError(
-                "poll_interval must be >= 0.1 seconds"
-            )
+            raise ConfigError("poll_interval must be >= 0.1 seconds")
 
         raw_apps = raw.get("applications")
 
         if not isinstance(raw_apps, list):
-            raise ConfigError(
-                "CONFIG['applications'] must be a list"
-            )
+            raise ConfigError("CONFIG['applications'] must be a list")
 
-        applications = tuple(
-            self._parse_application(app)
-            for app in raw_apps
-        )
+        applications = tuple(self._parse_application(app) for app in raw_apps)
 
         ids = [app.id for app in applications]
 
         if len(ids) != len(set(ids)):
-            raise ConfigError(
-                "Application ids must be unique"
-            )
+            raise ConfigError("Application ids must be unique")
 
         return RuntimeConfig(
             poll_interval=poll_interval,
@@ -81,13 +66,10 @@ class StarlarkConfigLoader:
             app_id = str(raw["id"])
             name = str(raw["name"])
         except KeyError as exc:
-            raise ConfigError(
-                f"Application misses field {exc}"
-            ) from exc
+            raise ConfigError(f"Application misses field {exc}") from exc
 
         processes = frozenset(
-            str(process).lower()
-            for process in raw.get("processes", [])
+            str(process).lower() for process in raw.get("processes", [])
         )
 
         raw_title_rules = raw.get("title_rules", [])
@@ -97,16 +79,13 @@ class StarlarkConfigLoader:
         for rule in raw_title_rules:
             pattern = str(rule["pattern"])
             priority = int(rule.get("priority", 0))
-            project_group = str(
-                rule.get("project_group", "project")
-            )
+            project_group = str(rule.get("project_group", "project"))
 
             try:
                 re.compile(pattern)
             except re.error as exc:
                 raise ConfigError(
-                    f"Invalid regex for {app_id}: "
-                    f"{pattern}: {exc}"
+                    f"Invalid regex for {app_id}: {pattern}: {exc}"
                 ) from exc
 
             title_rules.append(
@@ -147,10 +126,7 @@ class StarlarkConfigLoader:
         )
 
         if not processes and not title_rules:
-            raise ConfigError(
-                f"{app_id}: processes or title_rules "
-                f"must be specified"
-            )
+            raise ConfigError(f"{app_id}: processes or title_rules must be specified")
 
         return ApplicationConfig(
             id=app_id,
@@ -174,10 +150,7 @@ class StarlarkConfigLoader:
             }
 
         if isinstance(value, Sequence):
-            return [
-                self._to_python(item)
-                for item in value
-            ]
+            return [self._to_python(item) for item in value]
 
         if hasattr(value, "items"):
             return {
@@ -186,11 +159,6 @@ class StarlarkConfigLoader:
             }
 
         if hasattr(value, "__iter__"):
-            return [
-                self._to_python(item)
-                for item in value
-            ]
+            return [self._to_python(item) for item in value]
 
-        raise ConfigError(
-            f"Unsupported Starlark value: {type(value)!r}"
-        )
+        raise ConfigError(f"Unsupported Starlark value: {type(value)!r}")

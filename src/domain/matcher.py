@@ -32,10 +32,7 @@ class SmartMatcher:
                 if candidate is None:
                     continue
 
-                if (
-                    best is None
-                    or candidate.score > best.score
-                ):
+                if best is None or candidate.score > best.score:
                     best = candidate
 
         return best
@@ -46,10 +43,7 @@ class SmartMatcher:
         app: ApplicationConfig,
     ) -> DetectedActivity | None:
 
-        process_matches = (
-            window.process_name
-            in app.processes
-        )
+        process_matches = window.process_name in app.processes
 
         # Если processes заданы, чужой процесс
         # не может притвориться этой IDE только
@@ -80,11 +74,9 @@ class SmartMatcher:
 
             if rule.priority > best_rule_score:
                 best_rule_score = rule.priority
-                best_project = (
-                    self._extract_project(
-                        match,
-                        rule.project_group,
-                    )
+                best_project = self._extract_project(
+                    match,
+                    rule.project_group,
                 )
 
         if best_rule_score >= 0:
@@ -114,7 +106,7 @@ class SmartMatcher:
         )
 
     @staticmethod
-    def _extract_project(match: re.Match, group: str ) -> str | None:
+    def _extract_project(match: re.Match, group: str) -> str | None:
 
         try:
             value = match.group(group)

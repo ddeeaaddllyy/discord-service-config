@@ -29,9 +29,7 @@ class DiscordPresence:
 
         self._rpc = rpc
 
-        logger.info(
-            "Connected to Discord RPC"
-        )
+        logger.info("Connected to Discord RPC")
 
     def update(self, activity: DetectedActivity) -> None:
         app = activity.app
@@ -79,10 +77,7 @@ class DiscordPresence:
         self._last_payload = payload
 
     def clear(self) -> None:
-        if (
-            self._rpc is not None
-            and self._last_payload is not None
-        ):
+        if self._rpc is not None and self._last_payload is not None:
             self._rpc.clear()
 
         self._last_payload = None

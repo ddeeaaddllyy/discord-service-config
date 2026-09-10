@@ -18,7 +18,7 @@ Holds the Discord application credentials required for Rich Presence:
 # client.star
 CLIENT = {
     "id": "1522675721246478536",
-    "public_key": "983e95a6eb09f546b0f5c9264310861af65d5ef9d6488c64e1e49d06384dc160"
+    "public_key": "983e95a6eb09f546b0f5c9264310861af65d5ef9d6488c64e1e49d06384dc160",
 }
 ```
 
@@ -46,14 +46,14 @@ Example entry for IntelliJ IDEA:
     "processes": ["idea.exe", "idea64.exe"],
     "title_rules": [
         {"pattern": "^(?P<project>.+?)\\s+[–-]\\s+IntelliJ IDEA$", "priority": 100},
-        {"pattern": "^(?P<project>.+?)\\s+[–-]\\s+.*IntelliJ IDEA.*$", "priority": 80}
+        {"pattern": "^(?P<project>.+?)\\s+[–-]\\s+.*IntelliJ IDEA.*$", "priority": 80},
     ],
     "presence": {
         "details": "Работа в {app}",
         "state": "{project}",
         "large_image": "intellijidea",
-        "large_text": "IntelliJ IDEA"
-    }
+        "large_text": "IntelliJ IDEA",
+    },
 }
 ```
 

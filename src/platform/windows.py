@@ -15,31 +15,25 @@ class WindowsWindowProvider:
     def get_windows(self) -> list[WindowInfo]:
         windows: list[WindowInfo] = []
 
-        foreground_hwnd = (
-            win32gui.GetForegroundWindow()
-        )
+        foreground_hwnd = win32gui.GetForegroundWindow()
 
         def callback(hwnd: int, _: object) -> bool:
             try:
                 if not win32gui.IsWindowVisible(hwnd):
                     return True
 
-                title = ( win32gui.GetWindowText(hwnd).strip() )
+                title = win32gui.GetWindowText(hwnd).strip()
 
                 if not title:
                     return True
 
-                _, pid = ( win32process.GetWindowThreadProcessId(hwnd) )
+                _, pid = win32process.GetWindowThreadProcessId(hwnd)
 
                 if not pid:
                     return True
 
                 try:
-                    process_name = (
-                        psutil.Process(pid)
-                        .name()
-                        .lower()
-                    )
+                    process_name = psutil.Process(pid).name().lower()
                 except (
                     psutil.NoSuchProcess,
                     psutil.AccessDenied,
@@ -52,9 +46,7 @@ class WindowsWindowProvider:
                         pid=pid,
                         process_name=process_name,
                         title=title,
-                        foreground=(
-                            hwnd == foreground_hwnd
-                        ),
+                        foreground=(hwnd == foreground_hwnd),
                     )
                 )
 

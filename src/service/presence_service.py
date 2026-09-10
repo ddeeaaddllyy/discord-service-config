@@ -25,14 +25,10 @@ class PresenceService:
 
     def run(self) -> None:
         while True:
-            config, _ = (
-                self._config_store.snapshot()
-            )
+            config, _ = self._config_store.snapshot()
 
             try:
-                windows = (
-                    self._windows.get_windows()
-                )
+                windows = self._windows.get_windows()
 
                 activity = self._matcher.match(
                     windows,
@@ -42,17 +38,11 @@ class PresenceService:
                 if activity is None:
                     self._presence.clear()
                 else:
-                    self._presence.update(
-                        activity
-                    )
+                    self._presence.update(activity)
 
             except Exception:
-                logger.exception(
-                    "Presence iteration failed"
-                )
+                logger.exception("Presence iteration failed")
 
-            self._config_store.changed.wait(
-                timeout=config.poll_interval
-            )
+            self._config_store.changed.wait(timeout=config.poll_interval)
 
             self._config_store.changed.clear()
