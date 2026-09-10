@@ -33,4 +33,4 @@ exclude = [
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "RUF"]
-ignore = ["RUF059"]
+ignore = ["RUF001", "RUF002", "RUF003"]
