@@ -1,7 +1,9 @@
 [project]
 name = "discord-service-config"
-authors = ["It was then i started gettin lost in books"]
-version = "1.1.1"
+authors = [
+    { name = "It was then i started gettin lost in books", email = "noemail@gmail.com" }
+    ]
+version = "1.1.2"
 requires-python = ">=3.11"
 dependencies = [
     "psutil>=7.1.1",
