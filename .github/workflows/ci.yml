@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Lint and validate
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install project and tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install .[dev] || python -m pip install .
+
+      - name: Ruff lint
+        run: ruff check .
+
+      - name: Ruff format check
+        run: ruff format --check .
+
+      - name: Mypy type check
+        continue-on-error: true
+        run: mypy --ignore-missing-imports .
+
+      - name: Compile all Python files
+        run: |
+          python -m compileall -q .
+
+      - name: Validate Starlark config files
+        run: |
+          python -c "
+          import pathlib, sys
+          files = list(pathlib.Path('config').glob('*.star'))
+          if not files:
+              print('No .star files found in config/')
+              sys.exit(0)
+          for f in files:
+              text = f.read_text(encoding='utf-8')
+              try:
+                  compile(text, str(f), 'exec')
+                  print(f'OK  {f}')
+              except SyntaxError as e:
+                  print(f'FAIL {f}: {e}')
+                  sys.exit(1)
+          "
