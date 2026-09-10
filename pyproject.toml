@@ -3,7 +3,7 @@ name = "discord-service-config"
 authors = [
     { name = "It was then i started gettin lost in books", email = "noemail@gmail.com" }
     ]
-version = "1.1.2"
+version = "1.1.2-gitfix"
 requires-python = ">=3.11"
 dependencies = [
     "psutil>=7.1.1",
@@ -19,3 +19,18 @@ dev = [
     "mypy",
     "build",
 ]
+
+[tool.ruff]
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+ignore = ["RUF059"]
