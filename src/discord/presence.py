@@ -4,6 +4,7 @@ import logging
 import time
 
 from pypresence import Presence
+from pypresence.types import ActivityType
 
 from src.domain.models import DetectedActivity
 
@@ -56,6 +57,7 @@ class DiscordPresence:
             state,
             presence.large_image,
             presence.large_text,
+            ActivityType.PLAYING # highest activity
         )
 
         if payload == self._last_payload:

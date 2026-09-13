@@ -1,6 +1,8 @@
 from __future__ import annotations
 import logging
 from pathlib import Path
+
+from pypresence import DiscordNotFound
 from src.config.config_store import ConfigStore
 from src.config.config_watcher import ConfigWatcher
 from src.config.starlark_loader import StarlarkConfigLoader
@@ -71,4 +73,11 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except DiscordNotFound as exp:
+        raise RuntimeError(
+            "Discord client not found. Please ensure that Discord is running."
+        ) from exp
+    finally:
+        logging.info("Thx for using DSC! If you have any issues, please report them on GitHub.")
